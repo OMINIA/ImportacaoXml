@@ -28,7 +28,7 @@ public class Log {
 
         String arquivo = null;
         System.out.println(mensagem + " " + dataHora);
-        File file = new File("D:\\logImportaXml.log");
+        File file = new File(Tarefa.PATH_LOG+"logImportaXml.log");
 
         if (file.isFile()) {
             arquivo = new Scanner(new File(file.getAbsolutePath())).useDelimiter("\\Z").next();

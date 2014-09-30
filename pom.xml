@@ -28,10 +28,7 @@
                             <goal>attached</goal>
                         </goals>
                     </execution>
-                </executions>
-                <dependencies>
-                   
-                </dependencies>
+                </executions>                
             </plugin>
         </plugins>
     </build>

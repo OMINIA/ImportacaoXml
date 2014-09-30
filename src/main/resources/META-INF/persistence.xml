@@ -3,6 +3,7 @@
   <persistence-unit name="HSQLDB" transaction-type="RESOURCE_LOCAL">
     <provider>org.eclipse.persistence.jpa.PersistenceProvider</provider>
     <class>br.com.dbsti.importaXml.model.ConfiguracoesEmail</class>
+    <class>br.com.dbsti.importaXml.model.NFeMestre</class>
     <properties>
       <property name="javax.persistence.jdbc.url" value="jdbc:hsqldb:hsql://localhost"/>
       <property name="javax.persistence.jdbc.password" value=""/>

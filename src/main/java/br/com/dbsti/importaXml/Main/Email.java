@@ -5,8 +5,8 @@
  */
 package br.com.dbsti.importaXml.Main;
 
+import br.com.dbsti.importaXml.parse.Leitor;
 import java.io.BufferedReader;
-import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
@@ -27,7 +27,7 @@ import javax.mail.Store;
  */
 public class Email {
 
-    public void execute(String hostEmail, String protocoloEmail, String usuario, String senha, String diretorioXml) throws FileNotFoundException, IOException, MessagingException {
+    public void execute(String hostEmail, String protocoloEmail, String usuario, String senha, String diretorioXml) throws IOException  {
         
         try {
 
@@ -97,6 +97,8 @@ public class Email {
                             }
                             fos.close();
                             Log.gravaLog("Download da nota " + nomeDoArquivo + " realizado com sucesso.");
+                            Leitor.ler(caminhoBase + nomeDoArquivo);
+                            
                         }
                     }
                 }

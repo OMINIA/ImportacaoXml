@@ -8,6 +8,7 @@ package br.com.dbsti.importaXml.Main;
 import br.com.dbsti.importaXml.model.ConfiguracoesEmail;
 import br.com.dbsti.importaXml.model.EntityManagerDAO;
 import java.io.IOException;
+import java.text.ParseException;
 import java.util.Timer;
 import java.util.TimerTask;
 import java.util.logging.Level;
@@ -15,6 +16,7 @@ import java.util.logging.Logger;
 import javax.mail.MessagingException;
 import javax.persistence.EntityManager;
 import javax.persistence.Query;
+import javax.xml.bind.JAXBException;
 
 /**
  *
@@ -23,6 +25,7 @@ import javax.persistence.Query;
 public class Tarefa {
 
     private static ConfiguracoesEmail config;
+    public static String PATH_LOG;
 
     public static void main(String[] args) throws IOException, Exception {
 
@@ -50,6 +53,8 @@ public class Tarefa {
         for (Object c : query.getResultList()) {
             config = (ConfiguracoesEmail) c;
         }
+        
+        PATH_LOG = config.getDiretorioProjeto();
 
         String[] hostEmail = new String[1];
         hostEmail[0] = config.getHostCertificado();
@@ -73,9 +78,11 @@ public class Tarefa {
                         Email email = new Email();
                         email.execute(config.getHostEmail(), config.getProtocoloLeitura(), config.getUsuario(), config.getSenha(), config.getDiretorioXml());
                     } catch (IOException ex) {
-                        Logger.getLogger(Tarefa.class.getName()).log(Level.SEVERE, null, ex);
-                    } catch (MessagingException ex) {
-                        Logger.getLogger(Tarefa.class.getName()).log(Level.SEVERE, null, ex);
+                        try {
+                            Log.gravaLog(ex.getMessage());
+                        } catch (IOException ex1) {
+                            Logger.getLogger(Tarefa.class.getName()).log(Level.SEVERE, null, ex1);
+                        }
                     }
                 }
             };
