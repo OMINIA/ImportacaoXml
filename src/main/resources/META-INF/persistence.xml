@@ -4,6 +4,8 @@
     <provider>org.eclipse.persistence.jpa.PersistenceProvider</provider>
     <class>br.com.dbsti.importaXml.model.ConfiguracoesEmail</class>
     <class>br.com.dbsti.importaXml.model.NFeMestre</class>
+    <class>br.com.dbsti.importaXml.model.NFeEmitente</class>
+    <class>br.com.dbsti.importaXml.model.NFeEnderecoEmitente</class>
     <properties>
       <property name="javax.persistence.jdbc.url" value="jdbc:hsqldb:hsql://localhost"/>
       <property name="javax.persistence.jdbc.password" value=""/>

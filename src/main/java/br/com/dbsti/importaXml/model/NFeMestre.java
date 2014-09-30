@@ -11,6 +11,7 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.ManyToOne;
 import javax.persistence.Temporal;
 
 /**
@@ -44,6 +45,17 @@ public class NFeMestre implements Serializable {
     private String situacao;
     private String mensagem;
     private Integer codigoAmbiente;
+
+    @ManyToOne
+    private NFeEmitente nfeEmitente;
+
+    public NFeEmitente getNfeEmitente() {
+        return nfeEmitente;
+    }
+
+    public void setNfeEmitente(NFeEmitente nfeEmitente) {
+        this.nfeEmitente = nfeEmitente;
+    }
 
     public Date getDataHoraEmissao() {
         return dataHoraEmissao;
