@@ -12,8 +12,8 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
-import javax.persistence.OneToMany;
 import javax.persistence.Temporal;
 
 /**
@@ -57,18 +57,18 @@ public class Nota implements Serializable {
     @ManyToOne
     private Transportador transportador;
 
-    @OneToMany
-    private List<Pagamento> pagamentos;
-
     private String camihhoXml;
     private String caminhoPdf;
 
-    public List<Pagamento> getPagamentos() {
-        return pagamentos;
+    @ManyToMany
+    private List<Produto> produto;
+
+    public List<Produto> getProduto() {
+        return produto;
     }
 
-    public void setPagamentos(List<Pagamento> pagamentos) {
-        this.pagamentos = pagamentos;
+    public void setProduto(List<Produto> produto) {
+        this.produto = produto;
     }
 
     public Transportador getTransportador() {

@@ -10,6 +10,7 @@
     <class>br.com.dbsti.importaXml.model.EnderecoDestinatario</class>
     <class>br.com.dbsti.importaXml.model.Transportador</class>
     <class>br.com.dbsti.importaXml.model.Pagamento</class>
+    <class>br.com.dbsti.importaXml.model.Produto</class>
     <properties>
       <property name="javax.persistence.jdbc.url" value="jdbc:oracle:thin:@localhost:1521:XE"/>
       <property name="javax.persistence.jdbc.password" value="F110987"/>

@@ -11,10 +11,13 @@ import br.com.dbsti.importaXml.model.Emitente;
 import br.com.dbsti.importaXml.model.EnderecoEmitente;
 import br.com.dbsti.importaXml.model.EntityManagerDAO;
 import br.com.dbsti.importaXml.model.Nota;
+import static br.com.dbsti.importaXml.model.Nota_.produto;
 import br.com.dbsti.importaXml.model.Pagamento;
+import br.com.dbsti.importaXml.model.Produto;
 import br.com.dbsti.importaXml.model.Transportador;
 import br.inf.portalfiscal.nfe.TNFe.InfNFe.Cobr.Dup;
 import br.inf.portalfiscal.nfe.TNFe.InfNFe.Dest;
+import br.inf.portalfiscal.nfe.TNFe.InfNFe.Det;
 import br.inf.portalfiscal.nfe.TNFe.InfNFe.Emit;
 import br.inf.portalfiscal.nfe.TNFe.InfNFe.Ide;
 import br.inf.portalfiscal.nfe.TNFe.InfNFe.Transp.Transporta;
@@ -118,12 +121,15 @@ public class Leitor {
                     nfeMestre.setTransportador(transportador);
                 }
 
-                if (nfe.getNFe().getInfNFe().getCobr() != null) {
-                    nfeMestre.setPagamentos(parsePagamento(nfe.getNFe().getInfNFe().getCobr().getDup()));
-                }
+                nfeMestre.setProduto(parseProduto(nfe.getNFe().getInfNFe().getDet()));
 
                 em.persist(nfeMestre);
                 em.getTransaction().commit();
+
+                if (nfe.getNFe().getInfNFe().getCobr() != null) {
+                    parsePagamento(nfe.getNFe().getInfNFe().getCobr().getDup(), nfeMestre);
+                }
+
             } catch (ParseException ex) {
                 Logger.getLogger(Leitor.class.getName()).log(Level.SEVERE, null, ex);
             }
@@ -232,10 +238,9 @@ public class Leitor {
         return transportador;
     }
 
-    private static List<Pagamento> parsePagamento(List<Dup> duplicatas) throws ParseException {
+    private static void parsePagamento(List<Dup> duplicatas, Nota nota) throws ParseException {
 
-        List<Pagamento> pagamentos = new ArrayList<>();
-
+        EntityManager em = EntityManagerDAO.getEntityManager();
         for (Dup duplicata : duplicatas) {
             Pagamento pagamento = new Pagamento();
             SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
@@ -243,14 +248,56 @@ public class Leitor {
             pagamento.setDataPagamento(dataVencimento);
             pagamento.setNumeroPagamento(duplicata.getNDup());
             pagamento.setValorPagamento(Double.parseDouble(duplicata.getVDup()));
-            pagamentos.add(pagamento);
-            
-            EntityManager em = EntityManagerDAO.getEntityManager();
-            em.persist(pagamento);
-            em.getTransaction().commit();
-        }
+            pagamento.setNota(nota);
 
-        return pagamentos;
+            em.persist(pagamento);
+        }
+        em.getTransaction().commit();
+    }
+
+    private static List<Produto> parseProduto(List<Det> detalhes) {
+
+        List<Produto> produtos = new ArrayList<>();
+        EntityManager em = EntityManagerDAO.getEntityManager();
+
+        for (Det detalhe : detalhes) {
+
+            Produto produto = new Produto();
+            Query query = em.createQuery("select p from Produto p where p.codigo = " + detalhe.getProd().getCProd());
+
+            for (Object object : query.getResultList()) {
+                produto = (Produto) object;
+            }
+
+            if (produto.getCodigo() == null) {
+                produto.setCfop(Integer.parseInt(detalhe.getProd().getCFOP()));
+                produto.setCodigo(Integer.parseInt(detalhe.getProd().getCProd()));
+                produto.setCodigoBarras(detalhe.getProd().getCEAN());
+                produto.setDescricao(detalhe.getProd().getXProd());
+                produto.setDescricaoItemPedido(detalhe.getProd().getNItemPed());
+                produto.setDescricaoPedido(detalhe.getProd().getXPed());
+                produto.setNcm(Integer.parseInt(detalhe.getProd().getNCM()));
+                produto.setQuantidade(Double.parseDouble(detalhe.getProd().getQCom()));
+                produto.setUnidadeMedida(detalhe.getProd().getUCom());
+
+                if (detalhe.getProd().getVDesc() != null) {
+                    produto.setValorDesconto(Double.parseDouble(detalhe.getProd().getVDesc()));
+                }
+                if (detalhe.getProd().getVFrete() != null) {
+                    produto.setValorFrete(Double.parseDouble(detalhe.getProd().getVFrete()));
+                }
+                if (detalhe.getProd().getVOutro() != null) {
+                    produto.setValorOutros(Double.parseDouble(detalhe.getProd().getVOutro()));
+                }
+                
+                produto.setValorUnitario(Double.parseDouble(detalhe.getProd().getVUnCom()));
+                produto.setValorTotal(Double.parseDouble(detalhe.getProd().getVProd()));
+                em.persist(produto);
+                em.getTransaction().commit();
+            }
+            produtos.add(produto);
+        }
+        return produtos;
     }
 
 }
