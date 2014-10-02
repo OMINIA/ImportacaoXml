@@ -79,7 +79,7 @@ public class Email {
                         nomeDoArquivo = multi.getBodyPart(i).getFileName();                        
                         if (nomeDoArquivo != null && nomeDoArquivo.contains("pdf")) {
                             InputStream is = multi.getBodyPart(i).getInputStream();
-                            FileOutputStream fos = new FileOutputStream(caminhoBase + nomeDoArquivoPdf);
+                            FileOutputStream fos = new FileOutputStream(caminhoBase + nomeDoArquivo);
                             int bytesRead;
                             while ((bytesRead = is.read(buf)) != -1) {
                                 fos.write(buf, 0, bytesRead);
@@ -89,7 +89,7 @@ public class Email {
                             Log.gravaLog("Download do PDF da nota " + nomeDoArquivoPdf + " realizado com sucesso.");                            
                         } else if (nomeDoArquivo != null && nomeDoArquivo.contains("xml")) {
                             InputStream is = multi.getBodyPart(i).getInputStream();
-                            FileOutputStream fos = new FileOutputStream(caminhoBase + nomeDoArquivoXml);
+                            FileOutputStream fos = new FileOutputStream(caminhoBase + nomeDoArquivo);
                             int bytesRead;
                             while ((bytesRead = is.read(buf)) != -1) {
                                 fos.write(buf, 0, bytesRead);
