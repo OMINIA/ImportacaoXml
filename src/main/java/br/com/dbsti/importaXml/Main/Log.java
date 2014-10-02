@@ -22,7 +22,7 @@ public class Log {
 
         Date hoje = new Date();
         SimpleDateFormat df;
-        df = new SimpleDateFormat("dd/MM/yyyy hh:mm:ss");
+        df = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
         
         String dataHora = df.format(hoje);
 

@@ -17,7 +17,7 @@ import javax.persistence.Persistence;
 public class EntityManagerDAO {
     
     public static EntityManager getEntityManager(){
-        EntityManagerFactory emf =  Persistence.createEntityManagerFactory("HSQLDB");
+        EntityManagerFactory emf =  Persistence.createEntityManagerFactory("Oracle");
         EntityManager em  = emf.createEntityManager();
         em.getTransaction().begin();
         return em;

@@ -27,34 +27,24 @@ import javax.mail.Store;
  */
 public class Email {
 
-    public void execute(String hostEmail, String protocoloEmail, String usuario, String senha, String diretorioXml) throws IOException  {
-        
+    public void execute(String hostEmail, String protocoloEmail, String usuario, String senha, String diretorioXml) throws IOException {
+
         try {
 
             String MAIL_POP3_SERVER = hostEmail;
-            String nomeDoArquivo;
-            // Create empty properties  
+            String nomeDoArquivo = null;
+            String nomeDoArquivoXml = null;
+            String nomeDoArquivoPdf = null;
             Properties props = new Properties();
-
-            // Get session  
             Session session = Session.getDefaultInstance(props, null);
-
-            // Get the store  
             Store store = session.getStore(protocoloEmail);
-
-            // Connect to store  
             store.connect(MAIL_POP3_SERVER, usuario, senha);
-
-            // Get folder  
             Folder folder = store.getFolder("INBOX");
-
-            // Open read-only  
             folder.open(Folder.READ_ONLY);
 
-            // Get directory  
             for (Message message : folder.getMessages()) {
 
-                Log.gravaLog("Email Encontrado... ");
+                Log.gravaLog("Novo Email recebido... ");
 
                 Part parteMensagem = message;
                 Object content = parteMensagem.getContent();
@@ -82,24 +72,35 @@ public class Email {
                     Log.gravaLog("Anexo Encontrado... ");
                     byte[] buf = new byte[4096];
 
-                    //Aqui você define o caminho que salvará o arquivo.  
                     String caminhoBase = diretorioXml;
                     Multipart multi = (Multipart) content;
 
                     for (int i = 0; i < multi.getCount(); i++) {
-                        nomeDoArquivo = multi.getBodyPart(i).getFileName();
-                        if (nomeDoArquivo != null && nomeDoArquivo.contains("xml")) {
+                        nomeDoArquivo = multi.getBodyPart(i).getFileName();                        
+                        if (nomeDoArquivo != null && nomeDoArquivo.contains("pdf")) {
                             InputStream is = multi.getBodyPart(i).getInputStream();
-                            FileOutputStream fos = new FileOutputStream(caminhoBase + nomeDoArquivo);
+                            FileOutputStream fos = new FileOutputStream(caminhoBase + nomeDoArquivoPdf);
                             int bytesRead;
                             while ((bytesRead = is.read(buf)) != -1) {
                                 fos.write(buf, 0, bytesRead);
                             }
+                            fos.close();        
+                            nomeDoArquivoPdf = nomeDoArquivo;
+                            Log.gravaLog("Download do PDF da nota " + nomeDoArquivoPdf + " realizado com sucesso.");                            
+                        } else if (nomeDoArquivo != null && nomeDoArquivo.contains("xml")) {
+                            InputStream is = multi.getBodyPart(i).getInputStream();
+                            FileOutputStream fos = new FileOutputStream(caminhoBase + nomeDoArquivoXml);
+                            int bytesRead;
+                            while ((bytesRead = is.read(buf)) != -1) {
+                                fos.write(buf, 0, bytesRead);
+                            }
+                            nomeDoArquivoXml = nomeDoArquivo;
                             fos.close();
-                            Log.gravaLog("Download da nota " + nomeDoArquivo + " realizado com sucesso.");
-                            Leitor.ler(caminhoBase + nomeDoArquivo);
-                            
-                        }
+                            Log.gravaLog("Download do XML da nota " + nomeDoArquivoXml + " realizado com sucesso.");                            
+                        }                        
+                    }
+                    if (nomeDoArquivoXml != null){
+                        Leitor.ler(caminhoBase + nomeDoArquivoXml, caminhoBase + nomeDoArquivoPdf );
                     }
                 }
 

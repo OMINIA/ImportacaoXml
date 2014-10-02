@@ -54,7 +54,11 @@
             <artifactId>hsqldb</artifactId>
             <version>2.3.2</version>
         </dependency>
-
+        <dependency>
+            <groupId>cn.guoyukun.jdbc</groupId>
+            <artifactId>oracle-ojdbc6</artifactId>
+            <version>11.2.0.3.0</version>
+        </dependency>
     </dependencies>
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>

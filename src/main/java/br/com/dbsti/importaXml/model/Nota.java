@@ -19,7 +19,7 @@ import javax.persistence.Temporal;
  * @author Franciscato
  */
 @Entity
-public class NFeMestre implements Serializable {
+public class Nota implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
@@ -47,13 +47,32 @@ public class NFeMestre implements Serializable {
     private Integer codigoAmbiente;
 
     @ManyToOne
-    private NFeEmitente nfeEmitente;
+    private Emitente nfeEmitente;
 
-    public NFeEmitente getNfeEmitente() {
+    private String camihhoXml;
+    private String caminhoPdf;
+
+    public String getCamihhoXml() {
+        return camihhoXml;
+    }
+
+    public void setCamihhoXml(String camihhoXml) {
+        this.camihhoXml = camihhoXml;
+    }
+
+    public String getCaminhoPdf() {
+        return caminhoPdf;
+    }
+
+    public void setCaminhoPdf(String caminhoPdf) {
+        this.caminhoPdf = caminhoPdf;
+    }
+
+    public Emitente getNfeEmitente() {
         return nfeEmitente;
     }
 
-    public void setNfeEmitente(NFeEmitente nfeEmitente) {
+    public void setNfeEmitente(Emitente nfeEmitente) {
         this.nfeEmitente = nfeEmitente;
     }
 
@@ -163,10 +182,10 @@ public class NFeMestre implements Serializable {
     @Override
     public boolean equals(Object object) {
         // TODO: Warning - this method won't work in the case the id fields are not set
-        if (!(object instanceof NFeMestre)) {
+        if (!(object instanceof Nota)) {
             return false;
         }
-        NFeMestre other = (NFeMestre) object;
+        Nota other = (Nota) object;
         if ((this.id == null && other.id != null) || (this.id != null && !this.id.equals(other.id))) {
             return false;
         }

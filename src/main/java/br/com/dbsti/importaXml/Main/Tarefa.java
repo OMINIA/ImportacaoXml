@@ -5,18 +5,15 @@
  */
 package br.com.dbsti.importaXml.Main;
 
-import br.com.dbsti.importaXml.model.ConfiguracoesEmail;
+import br.com.dbsti.importaXml.model.Configuracoes;
 import br.com.dbsti.importaXml.model.EntityManagerDAO;
 import java.io.IOException;
-import java.text.ParseException;
 import java.util.Timer;
 import java.util.TimerTask;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import javax.mail.MessagingException;
 import javax.persistence.EntityManager;
 import javax.persistence.Query;
-import javax.xml.bind.JAXBException;
 
 /**
  *
@@ -24,70 +21,77 @@ import javax.xml.bind.JAXBException;
  */
 public class Tarefa {
 
-    private static ConfiguracoesEmail config;
+    private static Configuracoes config;
     public static String PATH_LOG;
 
-    public static void main(String[] args) throws IOException, Exception {
+    public static void main(String[] args) {
+        try {
+            System.clearProperty("javax.net.ssl.trustStoreType");
+            System.clearProperty("javax.net.ssl.trustStore");
+            System.clearProperty("javax.net.ssl.trustStorePassword");
 
-        System.clearProperty("javax.net.ssl.trustStoreType");
-        System.clearProperty("javax.net.ssl.trustStore");
-        System.clearProperty("javax.net.ssl.trustStorePassword");
+            config = new Configuracoes();
+            EntityManager em = EntityManagerDAO.getEntityManager();
+            Query query = em.createQuery("select c from Configuracoes c");
 
-        config = new ConfiguracoesEmail();
-        EntityManager em = EntityManagerDAO.getEntityManager();
-        Query query = em.createQuery("select c from ConfiguracoesEmail c");
-        
-        /*Estya parte deve ser removida - inicio
-        config.setDiretorioProjeto("C:\\Users\\Franciscato\\Documents\\NetBeansProjects\\ImportaXml\\");
-        config.setHostCertificado("gmail.com");
-        config.setHostEmail("pop.gmail.com");
-        config.setProtocoloLeitura("pop3s");
-        config.setSegundosIntervaloLeitura(5 * 1000);
-        config.setDiretorioXml("D:\\");
-        config.setSenha("nfedbs123");
-        config.setUsuario("nfe@dbsti.com.br");
-        em.persist(config);
-        em.getTransaction().commit();
-        /*Estya parte deve ser removida - Fim*/
+            /*Estya parte deve ser removida - inicio
+             config.setDiretorioProjeto("C:\\Users\\Franciscato\\Documents\\NetBeansProjects\\ImportaXml\\");
+             config.setHostCertificado("gmail.com");
+             config.setHostEmail("pop.gmail.com");
+             config.setProtocoloLeitura("pop3s");
+             config.setSegundosIntervaloLeitura(5 * 1000);
+             config.setDiretorioXml("D:\\");
+             config.setSenha("nfedbs123");
+             config.setUsuario("nfe@dbsti.com.br");
+             em.persist(config);
+             em.getTransaction().commit();
+             /*Estya parte deve ser removida - Fim*/
+            for (Object c : query.getResultList()) {
+                config = (Configuracoes) c;
+            }
 
-        for (Object c : query.getResultList()) {
-            config = (ConfiguracoesEmail) c;
-        }
-        
-        PATH_LOG = config.getDiretorioProjeto();
+            if (config.getHostEmail() == null) {
+                Log.gravaLog("Você precisa configurar seu BANCO DE DADOS, verifique a tabela CONFIGURACOES.");
+            } else {
 
-        String[] hostEmail = new String[1];
-        hostEmail[0] = config.getHostCertificado();
-        InstallCert.instalaCertificado(hostEmail);
+                PATH_LOG = config.getDiretorioProjeto();
 
-        System.setProperty("javax.net.ssl.trustStoreType", "JKS");
-        System.setProperty("javax.net.ssl.trustStore", config.getDiretorioProjeto() + "jssecacerts");
-        System.setProperty("javax.net.ssl.trustStorePassword", "changeit");
+                String[] hostEmail = new String[1];
+                hostEmail[0] = config.getHostCertificado();
+                InstallCert.instalaCertificado(hostEmail);
 
-        Log.gravaLog("Verificando Email's... ");
-        Timer timer = null;
-        if (timer == null) {
-            timer = new Timer();
-            TimerTask tarefa;
+                System.setProperty("javax.net.ssl.trustStoreType", "JKS");
+                System.setProperty("javax.net.ssl.trustStore", config.getDiretorioProjeto() + "jssecacerts");
+                System.setProperty("javax.net.ssl.trustStorePassword", "changeit");
 
-            tarefa = new TimerTask() {
+                Log.gravaLog("Verificando Email's... ");
+                Timer timer = null;
+                if (timer == null) {
+                    timer = new Timer();
+                    TimerTask tarefa;
 
-                @Override
-                public void run() {
-                    try {
-                        Email email = new Email();
-                        email.execute(config.getHostEmail(), config.getProtocoloLeitura(), config.getUsuario(), config.getSenha(), config.getDiretorioXml());
-                    } catch (IOException ex) {
-                        try {
-                            Log.gravaLog(ex.getMessage());
-                        } catch (IOException ex1) {
-                            Logger.getLogger(Tarefa.class.getName()).log(Level.SEVERE, null, ex1);
+                    tarefa = new TimerTask() {
+
+                        @Override
+                        public void run() {
+
+                            try {
+                                Email email = new Email();
+                                email.execute(config.getHostEmail(), config.getProtocoloLeitura(), config.getUsuario(), config.getSenha(), config.getDiretorioXml());
+                            } catch (IOException ex) {
+                                Logger.getLogger(Tarefa.class.getName()).log(Level.SEVERE, null, ex);
+                            }
                         }
-                    }
+                    };
+                    timer.scheduleAtFixedRate(tarefa, config.getSegundosIntervaloLeitura(), config.getSegundosIntervaloLeitura());
                 }
-            };
-            timer.scheduleAtFixedRate(tarefa, config.getSegundosIntervaloLeitura(), config.getSegundosIntervaloLeitura());
+            }
+        } catch (Exception ex) {
+            try {
+                Log.gravaLog(ex.getMessage());
+            } catch (IOException ex1) {
+                Logger.getLogger(Tarefa.class.getName()).log(Level.SEVERE, null, ex1);
+            }
         }
     }
-
 }

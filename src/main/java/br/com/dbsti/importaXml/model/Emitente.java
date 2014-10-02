@@ -19,7 +19,7 @@ import javax.persistence.OneToOne;
  * @author Franciscato
  */
 @Entity
-public class NFeEmitente implements Serializable {
+public class Emitente implements Serializable {
 
     private static final long serialVersionUID = 1L;
     @Id
@@ -36,7 +36,18 @@ public class NFeEmitente implements Serializable {
     private String nomeFantasia;
     private String ie;
     private String cnae;
-    private String crt;           
+    private String crt;
+
+    @ManyToOne
+    private EnderecoEmitente enderecoEmitente;
+
+    public EnderecoEmitente getEnderecoEmitente() {
+        return enderecoEmitente;
+    }
+
+    public void setEnderecoEmitente(EnderecoEmitente enderecoEmitente) {
+        this.enderecoEmitente = enderecoEmitente;
+    }
 
     public String getCnpj() {
         return cnpj;
@@ -93,8 +104,6 @@ public class NFeEmitente implements Serializable {
     public void setCrt(String crt) {
         this.crt = crt;
     }
-    
- 
 
     @Override
     public int hashCode() {
@@ -106,10 +115,10 @@ public class NFeEmitente implements Serializable {
     @Override
     public boolean equals(Object object) {
         // TODO: Warning - this method won't work in the case the id fields are not set
-        if (!(object instanceof NFeEmitente)) {
+        if (!(object instanceof Emitente)) {
             return false;
         }
-        NFeEmitente other = (NFeEmitente) object;
+        Emitente other = (Emitente) object;
         if ((this.id == null && other.id != null) || (this.id != null && !this.id.equals(other.id))) {
             return false;
         }
