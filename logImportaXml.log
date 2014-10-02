@@ -208,4 +208,148 @@ Query: ReadAllQuery(referenceClass=Emitente sql="SELECT ID, CNAE, CNPJ, CPF, CRT
  Anexo Encontrado...  02/10/2014 00:39:40 
  Download do XML da nota 41140376511260000274550010000189751067134005-procNFe.xml realizado com sucesso. 02/10/2014 00:39:40 
  Realizando Parse do Xml...  02/10/2014 00:39:40 
- Parse realizado com sucesso!  02/10/2014 00:39:40
+ Parse realizado com sucesso!  02/10/2014 00:39:40 
+ Verificando Email's...  02/10/2014 01:01:20 
+ Novo Email recebido...  02/10/2014 01:02:18 
+ Anexo Encontrado...  02/10/2014 01:02:19 
+ Download do XML da nota 35140908606880000156550010000131541783677723-procNFe.xml realizado com sucesso. 02/10/2014 01:02:19 
+ Download do XML da nota 41140376511260000274550010000189751067134005-procNFe.xml realizado com sucesso. 02/10/2014 01:02:19 
+ Realizando Parse do Xml...  02/10/2014 01:02:19 
+ Verificando Email's...  02/10/2014 01:03:01 
+ Novo Email recebido...  02/10/2014 01:03:03 
+ Anexo Encontrado...  02/10/2014 01:03:04 
+ Download do XML da nota 35140908606880000156550010000131541783677723-procNFe.xml realizado com sucesso. 02/10/2014 01:03:04 
+ Download do XML da nota 41140376511260000274550010000189751067134005-procNFe.xml realizado com sucesso. 02/10/2014 01:03:04 
+ Realizando Parse do Xml...  02/10/2014 01:03:04 
+ Parse realizado com sucesso!  02/10/2014 01:03:04 
+ Novo Email recebido...  02/10/2014 01:04:20 
+ Anexo Encontrado...  02/10/2014 01:04:21 
+ Download do XML da nota 41140376511260000274550010000189751067134005-procNFe.xml realizado com sucesso. 02/10/2014 01:04:21 
+ Realizando Parse do Xml...  02/10/2014 01:04:21 
+ Nota Fiscal já existente, verifique! 02/10/2014 01:04:21 
+ Parse realizado com sucesso!  02/10/2014 01:04:21 
+ Novo Email recebido...  02/10/2014 01:04:33 
+ Anexo Encontrado...  02/10/2014 01:04:34 
+ Download do XML da nota 35140958740440000165550010000409061658933478_v02 00-procNFe.xml realizado com sucesso. 02/10/2014 01:04:34 
+ Realizando Parse do Xml...  02/10/2014 01:04:34 
+ Parse realizado com sucesso!  02/10/2014 01:04:34 
+ ERRO MessagingException: [SYS/TEMP] Temporary system problem. Please try again later. 02/10/2014 01:04:41 
+ Novo Email recebido...  02/10/2014 01:06:25 
+ Anexo Encontrado...  02/10/2014 01:06:25 
+ Download do XML da nota 41140786744505000186550010000033841000033843-NFe.xml realizado com sucesso. 02/10/2014 01:06:25 
+ Realizando Parse do Xml...  02/10/2014 01:06:25 
+ Parse realizado com sucesso!  02/10/2014 01:06:26 
+ Verificando Email's...  02/10/2014 01:25:50 
+ Novo Email recebido...  02/10/2014 01:26:43 
+ Anexo Encontrado...  02/10/2014 01:26:44 
+ Download do XML da nota 41140786744505000186550010000033841000033843-NFe.xml realizado com sucesso. 02/10/2014 01:26:44 
+ Realizando Parse do Xml...  02/10/2014 01:26:44 
+ Verificando Email's...  02/10/2014 01:29:33 
+ Novo Email recebido...  02/10/2014 01:29:35 
+ Anexo Encontrado...  02/10/2014 01:29:36 
+ Download do XML da nota 41140786744505000186550010000033841000033843-NFe.xml realizado com sucesso. 02/10/2014 01:29:36 
+ Realizando Parse do Xml...  02/10/2014 01:29:36 
+ Verificando Email's...  02/10/2014 01:30:31 
+ Novo Email recebido...  02/10/2014 01:30:34 
+ Anexo Encontrado...  02/10/2014 01:30:34 
+ Download do XML da nota 41140786744505000186550010000033841000033843-NFe.xml realizado com sucesso. 02/10/2014 01:30:34 
+ Realizando Parse do Xml...  02/10/2014 01:30:34 
+ Verificando Email's...  02/10/2014 01:31:09 
+ Novo Email recebido...  02/10/2014 01:31:11 
+ Anexo Encontrado...  02/10/2014 01:31:11 
+ Download do XML da nota 41140786744505000186550010000033841000033843-NFe.xml realizado com sucesso. 02/10/2014 01:31:11 
+ Realizando Parse do Xml...  02/10/2014 01:31:11 
+ Parse realizado com sucesso!  02/10/2014 01:31:12 
+ Novo Email recebido...  02/10/2014 01:32:11 
+ Anexo Encontrado...  02/10/2014 01:32:11 
+ Download do XML da nota 41140376511260000274550010000189751067134005-procNFe.xml realizado com sucesso. 02/10/2014 01:32:11 
+ Realizando Parse do Xml...  02/10/2014 01:32:11 
+ Verificando Email's...  02/10/2014 01:33:07 
+ Novo Email recebido...  02/10/2014 01:33:09 
+ Anexo Encontrado...  02/10/2014 01:33:10 
+ Download do XML da nota 41140376511260000274550010000189751067134005-procNFe.xml realizado com sucesso. 02/10/2014 01:33:10 
+ Realizando Parse do Xml...  02/10/2014 01:33:10 
+ Parse realizado com sucesso!  02/10/2014 01:33:11 
+ Verificando Email's...  02/10/2014 01:35:50 
+ Novo Email recebido...  02/10/2014 01:36:08 
+ Anexo Encontrado...  02/10/2014 01:36:09 
+ Download do XML da nota 42140905046582000160550010000111411000000001-nfe.xml realizado com sucesso. 02/10/2014 01:36:09 
+ Download do PDF da nota 42140905046582000160550010000111411000000001.pdf realizado com sucesso. 02/10/2014 01:36:09 
+ Realizando Parse do Xml...  02/10/2014 01:36:09 
+ Parse realizado com sucesso!  02/10/2014 01:36:10 
+ Verificando Email's...  02/10/2014 01:41:07 
+ Novo Email recebido...  02/10/2014 01:41:57 
+ Anexo Encontrado...  02/10/2014 01:41:58 
+ Download do XML da nota 42140905046582000160550010000111411000000001-nfe.xml realizado com sucesso. 02/10/2014 01:41:58 
+ Download do PDF da nota 42140905046582000160550010000111411000000001.pdf realizado com sucesso. 02/10/2014 01:41:58 
+ Realizando Parse do Xml...  02/10/2014 01:41:58 
+ Parse realizado com sucesso!  02/10/2014 01:41:59 
+ Verificando Email's...  02/10/2014 01:43:47 
+ Novo Email recebido...  02/10/2014 01:44:01 
+ Anexo Encontrado...  02/10/2014 01:44:02 
+ Download do XML da nota 42140905046582000160550010000111511000000008-nfe.xml realizado com sucesso. 02/10/2014 01:44:02 
+ Download do PDF da nota 42140905046582000160550010000111511000000008.pdf realizado com sucesso. 02/10/2014 01:44:02 
+ Realizando Parse do Xml...  02/10/2014 01:44:02 
+ Parse realizado com sucesso!  02/10/2014 01:44:03 
+ Verificando Email's...  02/10/2014 01:45:48 
+ Novo Email recebido...  02/10/2014 01:46:00 
+ Anexo Encontrado...  02/10/2014 01:46:01 
+ Download do XML da nota 42140905046582000160550010000111511000000008-nfe.xml realizado com sucesso. 02/10/2014 01:46:01 
+ Download do PDF da nota 42140905046582000160550010000111511000000008.pdf realizado com sucesso. 02/10/2014 01:46:01 
+ Realizando Parse do Xml...  02/10/2014 01:46:01 
+ Parse realizado com sucesso!  02/10/2014 01:46:02 
+ Novo Email recebido...  02/10/2014 01:46:31 
+ Anexo Encontrado...  02/10/2014 01:46:32 
+ Download do XML da nota 42140905046582000160550010000111431000000006-nfe.xml realizado com sucesso. 02/10/2014 01:46:32 
+ Download do PDF da nota 42140905046582000160550010000111431000000006.pdf realizado com sucesso. 02/10/2014 01:46:32 
+ Realizando Parse do Xml...  02/10/2014 01:46:32 
+ Parse realizado com sucesso!  02/10/2014 01:46:32 
+ Verificando Email's...  02/10/2014 01:47:11 
+ Verificando Email's...  02/10/2014 01:48:18 
+ Novo Email recebido...  02/10/2014 01:48:23 
+ Anexo Encontrado...  02/10/2014 01:48:24 
+ Download do XML da nota 42140905046582000160550010000111431000000006-nfe.xml realizado com sucesso. 02/10/2014 01:48:24 
+ Download do PDF da nota 42140905046582000160550010000111431000000006.pdf realizado com sucesso. 02/10/2014 01:48:24 
+ Realizando Parse do Xml...  02/10/2014 01:48:24 
+ Verificando Email's...  02/10/2014 01:48:54 
+ Novo Email recebido...  02/10/2014 01:48:56 
+ Anexo Encontrado...  02/10/2014 01:48:58 
+ Download do XML da nota 42140905046582000160550010000111431000000006-nfe.xml realizado com sucesso. 02/10/2014 01:48:58 
+ Download do PDF da nota 42140905046582000160550010000111431000000006.pdf realizado com sucesso. 02/10/2014 01:48:58 
+ Realizando Parse do Xml...  02/10/2014 01:48:58 
+ Verificando Email's...  02/10/2014 01:50:33 
+ Novo Email recebido...  02/10/2014 01:50:35 
+ Anexo Encontrado...  02/10/2014 01:50:37 
+ Download do XML da nota 42140905046582000160550010000111431000000006-nfe.xml realizado com sucesso. 02/10/2014 01:50:37 
+ Download do PDF da nota 42140905046582000160550010000111431000000006.pdf realizado com sucesso. 02/10/2014 01:50:37 
+ Realizando Parse do Xml...  02/10/2014 01:50:37 
+ Verificando Email's...  02/10/2014 01:51:40 
+ Novo Email recebido...  02/10/2014 01:51:42 
+ Anexo Encontrado...  02/10/2014 01:51:43 
+ Download do XML da nota 42140905046582000160550010000111431000000006-nfe.xml realizado com sucesso. 02/10/2014 01:51:43 
+ Download do PDF da nota 42140905046582000160550010000111431000000006.pdf realizado com sucesso. 02/10/2014 01:51:43 
+ Realizando Parse do Xml...  02/10/2014 01:51:43 
+ Parse realizado com sucesso!  02/10/2014 01:51:43 
+ Verificando Email's...  02/10/2014 02:15:38 
+ Verificando Email's...  02/10/2014 02:16:24 
+ Novo Email recebido...  02/10/2014 02:16:50 
+ Anexo Encontrado...  02/10/2014 02:16:51 
+ Download do XML da nota 42140905046582000160550010000111411000000001-nfe.xml realizado com sucesso. 02/10/2014 02:16:51 
+ Realizando Parse do Xml...  02/10/2014 02:16:51 
+ Verificando Email's...  02/10/2014 02:18:44 
+ Novo Email recebido...  02/10/2014 02:18:46 
+ Anexo Encontrado...  02/10/2014 02:18:46 
+ Download do XML da nota 42140905046582000160550010000111411000000001-nfe.xml realizado com sucesso. 02/10/2014 02:18:46 
+ Realizando Parse do Xml...  02/10/2014 02:18:46 
+ Verificando Email's...  02/10/2014 02:19:55 
+ Novo Email recebido...  02/10/2014 02:19:57 
+ Anexo Encontrado...  02/10/2014 02:19:58 
+ Download do XML da nota 42140905046582000160550010000111411000000001-nfe.xml realizado com sucesso. 02/10/2014 02:19:58 
+ Realizando Parse do Xml...  02/10/2014 02:19:58 
+ Parse realizado com sucesso!  02/10/2014 02:19:59 
+ Verificando Email's...  02/10/2014 02:22:07 
+ Novo Email recebido...  02/10/2014 02:22:29 
+ Anexo Encontrado...  02/10/2014 02:22:30 
+ Download do XML da nota 42140905046582000160550010000111411000000001-nfe.xml realizado com sucesso. 02/10/2014 02:22:30 
+ Realizando Parse do Xml...  02/10/2014 02:22:30 
+ Parse realizado com sucesso!  02/10/2014 02:22:31

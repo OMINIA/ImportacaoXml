@@ -7,11 +7,13 @@ package br.com.dbsti.importaXml.model;
 
 import java.io.Serializable;
 import java.util.Date;
+import java.util.List;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.Temporal;
 
 /**
@@ -49,8 +51,41 @@ public class Nota implements Serializable {
     @ManyToOne
     private Emitente nfeEmitente;
 
+    @ManyToOne
+    private Destinatario destinatario;
+
+    @ManyToOne
+    private Transportador transportador;
+
+    @OneToMany
+    private List<Pagamento> pagamentos;
+
     private String camihhoXml;
     private String caminhoPdf;
+
+    public List<Pagamento> getPagamentos() {
+        return pagamentos;
+    }
+
+    public void setPagamentos(List<Pagamento> pagamentos) {
+        this.pagamentos = pagamentos;
+    }
+
+    public Transportador getTransportador() {
+        return transportador;
+    }
+
+    public void setTransportador(Transportador transportador) {
+        this.transportador = transportador;
+    }
+
+    public Destinatario getDestinatario() {
+        return destinatario;
+    }
+
+    public void setDestinatario(Destinatario destinatario) {
+        this.destinatario = destinatario;
+    }
 
     public String getCamihhoXml() {
         return camihhoXml;
