@@ -111,4 +111,5 @@ Query: ReadAllQuery(referenceClass=Emitente sql="SELECT ID, CNAE, CNPJ, CPF, CRT
  Download do XML da nota 42140905046582000160550010000110311000000000-nfe.xml realizado com sucesso. 02/10/2014 00:13:51 
  Download do PDF da nota 42140905046582000160550010000110311000000000.pdf realizado com sucesso. 02/10/2014 00:13:51 
  Realizando Parse do Xml...  02/10/2014 00:13:51 
- Parse realizado com sucesso!  02/10/2014 00:13:52
+ Parse realizado com sucesso!  02/10/2014 00:13:52 
+ Verificando Email's...  02/10/2014 00:21:39
