@@ -11,13 +11,14 @@ import br.com.dbsti.importaXml.model.Emitente;
 import br.com.dbsti.importaXml.model.EnderecoEmitente;
 import br.com.dbsti.importaXml.model.EntityManagerDAO;
 import br.com.dbsti.importaXml.model.Nota;
-import static br.com.dbsti.importaXml.model.Nota_.produto;
 import br.com.dbsti.importaXml.model.Pagamento;
 import br.com.dbsti.importaXml.model.Produto;
 import br.com.dbsti.importaXml.model.Transportador;
+import br.com.dbsti.importaXml.model.Tributo;
 import br.inf.portalfiscal.nfe.TNFe.InfNFe.Cobr.Dup;
 import br.inf.portalfiscal.nfe.TNFe.InfNFe.Dest;
 import br.inf.portalfiscal.nfe.TNFe.InfNFe.Det;
+import br.inf.portalfiscal.nfe.TNFe.InfNFe.Det.Imposto.COFINS;
 import br.inf.portalfiscal.nfe.TNFe.InfNFe.Emit;
 import br.inf.portalfiscal.nfe.TNFe.InfNFe.Ide;
 import br.inf.portalfiscal.nfe.TNFe.InfNFe.Transp.Transporta;
@@ -27,7 +28,6 @@ import java.io.File;
 import java.io.IOException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.logging.Level;
@@ -35,7 +35,9 @@ import java.util.logging.Logger;
 import javax.persistence.EntityManager;
 import javax.persistence.Query;
 import javax.xml.bind.JAXBContext;
+import javax.xml.bind.JAXBElement;
 import javax.xml.bind.JAXBException;
+import javax.xml.bind.Marshaller;
 import javax.xml.bind.Unmarshaller;
 
 /**
@@ -121,14 +123,14 @@ public class Leitor {
                     nfeMestre.setTransportador(transportador);
                 }
 
-                nfeMestre.setProduto(parseProduto(nfe.getNFe().getInfNFe().getDet()));
-
                 em.persist(nfeMestre);
                 em.getTransaction().commit();
 
                 if (nfe.getNFe().getInfNFe().getCobr() != null) {
                     parsePagamento(nfe.getNFe().getInfNFe().getCobr().getDup(), nfeMestre);
                 }
+
+                parseProduto(nfe.getNFe().getInfNFe().getDet(), nfeMestre);
 
             } catch (ParseException ex) {
                 Logger.getLogger(Leitor.class.getName()).log(Level.SEVERE, null, ex);
@@ -255,49 +257,77 @@ public class Leitor {
         em.getTransaction().commit();
     }
 
-    private static List<Produto> parseProduto(List<Det> detalhes) {
+    private static void parseProduto(List<Det> detalhes, Nota nota) throws IOException {
 
-        List<Produto> produtos = new ArrayList<>();
         EntityManager em = EntityManagerDAO.getEntityManager();
-
         for (Det detalhe : detalhes) {
 
             Produto produto = new Produto();
-            Query query = em.createQuery("select p from Produto p where p.codigo = " + detalhe.getProd().getCProd());
 
-            for (Object object : query.getResultList()) {
-                produto = (Produto) object;
+            produto.setCfop(Integer.parseInt(detalhe.getProd().getCFOP()));
+            produto.setCodigo(Integer.parseInt(detalhe.getProd().getCProd()));
+            produto.setCodigoBarras(detalhe.getProd().getCEAN());
+            produto.setDescricao(detalhe.getProd().getXProd());
+            produto.setDescricaoItemPedido(detalhe.getProd().getNItemPed());
+            produto.setDescricaoPedido(detalhe.getProd().getXPed());
+            produto.setNcm(Integer.parseInt(detalhe.getProd().getNCM()));
+            produto.setQuantidade(Double.parseDouble(detalhe.getProd().getQCom()));
+            produto.setUnidadeMedida(detalhe.getProd().getUCom());
+            produto.setSequenciaItemNota(Integer.parseInt(detalhe.getNItem()));
+
+            if (detalhe.getProd().getVDesc() != null) {
+                produto.setValorDesconto(Double.parseDouble(detalhe.getProd().getVDesc()));
+            }
+            if (detalhe.getProd().getVFrete() != null) {
+                produto.setValorFrete(Double.parseDouble(detalhe.getProd().getVFrete()));
+            }
+            if (detalhe.getProd().getVOutro() != null) {
+                produto.setValorOutros(Double.parseDouble(detalhe.getProd().getVOutro()));
             }
 
-            if (produto.getCodigo() == null) {
-                produto.setCfop(Integer.parseInt(detalhe.getProd().getCFOP()));
-                produto.setCodigo(Integer.parseInt(detalhe.getProd().getCProd()));
-                produto.setCodigoBarras(detalhe.getProd().getCEAN());
-                produto.setDescricao(detalhe.getProd().getXProd());
-                produto.setDescricaoItemPedido(detalhe.getProd().getNItemPed());
-                produto.setDescricaoPedido(detalhe.getProd().getXPed());
-                produto.setNcm(Integer.parseInt(detalhe.getProd().getNCM()));
-                produto.setQuantidade(Double.parseDouble(detalhe.getProd().getQCom()));
-                produto.setUnidadeMedida(detalhe.getProd().getUCom());
+            produto.setValorUnitario(Double.parseDouble(detalhe.getProd().getVUnCom()));
+            produto.setValorTotal(Double.parseDouble(detalhe.getProd().getVProd()));
+            produto.setNota(nota);
 
-                if (detalhe.getProd().getVDesc() != null) {
-                    produto.setValorDesconto(Double.parseDouble(detalhe.getProd().getVDesc()));
-                }
-                if (detalhe.getProd().getVFrete() != null) {
-                    produto.setValorFrete(Double.parseDouble(detalhe.getProd().getVFrete()));
-                }
-                if (detalhe.getProd().getVOutro() != null) {
-                    produto.setValorOutros(Double.parseDouble(detalhe.getProd().getVOutro()));
-                }
+            em.persist(produto);
+            em.getTransaction().commit();
+
+            parseTributoCofins(detalhe.getImposto().getContent(), produto);
+
+        }        
+
+    }
+
+    private static void parseTributoCofins(List<JAXBElement<?>> jaxbImpostos, Produto produto) throws IOException {
+
+        EntityManager em = EntityManagerDAO.getEntityManager();
+        COFINS cofins;
+        for (Object object : jaxbImpostos) {
+            try {
+                File file = new File("imposto.xml");
+                JAXBContext contexto = JAXBContext.newInstance(COFINS.class);
+                Marshaller m = contexto.createMarshaller();
+                m.marshal(object, file);
                 
-                produto.setValorUnitario(Double.parseDouble(detalhe.getProd().getVUnCom()));
-                produto.setValorTotal(Double.parseDouble(detalhe.getProd().getVProd()));
-                em.persist(produto);
+                Unmarshaller u = contexto.createUnmarshaller();
+                cofins = (COFINS) u.unmarshal(file);
+
+                Tributo tributoCofins = new Tributo();
+                tributoCofins.setAliquota(Double.parseDouble(cofins.getCOFINSAliq().getPCOFINS()));
+                tributoCofins.setBaseCalculo(Double.parseDouble(cofins.getCOFINSAliq().getVBC()));
+                tributoCofins.setCst(cofins.getCOFINSAliq().getCST());
+                tributoCofins.setNome("COFINS");
+                tributoCofins.setProduto(produto);
+                tributoCofins.setValor(Double.parseDouble(cofins.getCOFINSAliq().getVCOFINS()));
+                em.persist(tributoCofins);
                 em.getTransaction().commit();
+
+            } catch (JAXBException ex) {
+                Log.gravaLog(ex.getMessage());
             }
-            produtos.add(produto);
+
         }
-        return produtos;
+
     }
 
 }

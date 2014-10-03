@@ -33,19 +33,7 @@ public class Tarefa {
             config = new Configuracoes();
             EntityManager em = EntityManagerDAO.getEntityManager();
             Query query = em.createQuery("select c from Configuracoes c");
-
-            /*Estya parte deve ser removida - inicio
-             config.setDiretorioProjeto("C:\\Users\\Franciscato\\Documents\\NetBeansProjects\\ImportaXml\\");
-             config.setHostCertificado("gmail.com");
-             config.setHostEmail("pop.gmail.com");
-             config.setProtocoloLeitura("pop3s");
-             config.setSegundosIntervaloLeitura(5 * 1000);
-             config.setDiretorioXml("D:\\");
-             config.setSenha("nfedbs123");
-             config.setUsuario("nfe@dbsti.com.br");
-             em.persist(config);
-             em.getTransaction().commit();
-             /*Estya parte deve ser removida - Fim*/
+       
             for (Object c : query.getResultList()) {
                 config = (Configuracoes) c;
             }
@@ -77,7 +65,7 @@ public class Tarefa {
 
                             try {
                                 Email email = new Email();
-                                email.execute(config.getHostEmail(), config.getProtocoloLeitura(), config.getUsuario(), config.getSenha(), config.getDiretorioXml());
+                                email.execute(config.getHostEmail(), config.getProtocoloLeitura(), config.getUsuario(), config.getSenha(), config.getDiretorioXml(), config.getDeletaEmail());
                             } catch (IOException ex) {
                                 Logger.getLogger(Tarefa.class.getName()).log(Level.SEVERE, null, ex);
                             }

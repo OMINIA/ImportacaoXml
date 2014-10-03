@@ -48,6 +48,18 @@ public class Configuracoes implements Serializable {
 
     @Column
     private String diretorioXml;
+    
+    private Integer deletaEmail;
+
+    public Integer getDeletaEmail() {
+        return deletaEmail;
+    }
+
+    public void setDeletaEmail(Integer deletaEmail) {
+        this.deletaEmail = deletaEmail;
+    }
+    
+    
 
     public String getHostCertificado() {
         return hostCertificado;

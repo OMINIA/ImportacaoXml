@@ -12,6 +12,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.util.Properties;
+import javax.mail.Flags;
 import javax.mail.Folder;
 import javax.mail.FolderClosedException;
 import javax.mail.Message;
@@ -27,7 +28,7 @@ import javax.mail.Store;
  */
 public class Email {
 
-    public void execute(String hostEmail, String protocoloEmail, String usuario, String senha, String diretorioXml) throws IOException {
+    public void execute(String hostEmail, String protocoloEmail, String usuario, String senha, String diretorioXml, Integer deletaEmail) throws IOException {
 
         try {
 
@@ -40,7 +41,7 @@ public class Email {
             Store store = session.getStore(protocoloEmail);
             store.connect(MAIL_POP3_SERVER, usuario, senha);
             Folder folder = store.getFolder("INBOX");
-            folder.open(Folder.READ_ONLY);
+            folder.open(Folder.READ_WRITE);
 
             for (Message message : folder.getMessages()) {
 
@@ -76,7 +77,7 @@ public class Email {
                     Multipart multi = (Multipart) content;
 
                     for (int i = 0; i < multi.getCount(); i++) {
-                        nomeDoArquivo = multi.getBodyPart(i).getFileName();                        
+                        nomeDoArquivo = multi.getBodyPart(i).getFileName();
                         if (nomeDoArquivo != null && nomeDoArquivo.contains("pdf")) {
                             InputStream is = multi.getBodyPart(i).getInputStream();
                             FileOutputStream fos = new FileOutputStream(caminhoBase + nomeDoArquivo);
@@ -84,9 +85,9 @@ public class Email {
                             while ((bytesRead = is.read(buf)) != -1) {
                                 fos.write(buf, 0, bytesRead);
                             }
-                            fos.close();        
+                            fos.close();
                             nomeDoArquivoPdf = nomeDoArquivo;
-                            Log.gravaLog("Download do PDF da nota " + nomeDoArquivoPdf + " realizado com sucesso.");                            
+                            Log.gravaLog("Download do PDF da nota " + nomeDoArquivoPdf + " realizado com sucesso.");
                         } else if (nomeDoArquivo != null && nomeDoArquivo.contains("xml")) {
                             InputStream is = multi.getBodyPart(i).getInputStream();
                             FileOutputStream fos = new FileOutputStream(caminhoBase + nomeDoArquivo);
@@ -96,16 +97,18 @@ public class Email {
                             }
                             nomeDoArquivoXml = nomeDoArquivo;
                             fos.close();
-                            Log.gravaLog("Download do XML da nota " + nomeDoArquivoXml + " realizado com sucesso.");                            
-                        }                        
+                            Log.gravaLog("Download do XML da nota " + nomeDoArquivoXml + " realizado com sucesso.");
+                        }
                     }
-                    if (nomeDoArquivoXml != null){
-                        Leitor.ler(caminhoBase + nomeDoArquivoXml, caminhoBase + nomeDoArquivoPdf );
+                    if (nomeDoArquivoXml != null) {
+                        Leitor.ler(caminhoBase + nomeDoArquivoXml, caminhoBase + nomeDoArquivoPdf);
                     }
                 }
-
+                if (deletaEmail == 1) {
+                    message.setFlag(Flags.Flag.DELETED, true);
+                }
             }
-            folder.close(false);
+            folder.close(true);
             store.close();
         } catch (FolderClosedException f) {
             Log.gravaLog("ERRO FolderClosedException: " + f.getMessage());

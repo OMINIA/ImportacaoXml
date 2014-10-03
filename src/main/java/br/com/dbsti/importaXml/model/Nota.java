@@ -7,12 +7,10 @@ package br.com.dbsti.importaXml.model;
 
 import java.io.Serializable;
 import java.util.Date;
-import java.util.List;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.Temporal;
 
@@ -58,18 +56,7 @@ public class Nota implements Serializable {
     private Transportador transportador;
 
     private String camihhoXml;
-    private String caminhoPdf;
-
-    @ManyToMany
-    private List<Produto> produto;
-
-    public List<Produto> getProduto() {
-        return produto;
-    }
-
-    public void setProduto(List<Produto> produto) {
-        this.produto = produto;
-    }
+    private String caminhoPdf;   
 
     public Transportador getTransportador() {
         return transportador;

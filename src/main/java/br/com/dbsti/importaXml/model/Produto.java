@@ -24,6 +24,7 @@ public class Produto implements Serializable {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
     private Integer codigo;
+    private Integer sequenciaItemNota;
     private String codigoBarras;
     private String descricao;
     private Integer ncm;
@@ -37,7 +38,26 @@ public class Produto implements Serializable {
     private Double valorTotal;
     private String descricaoPedido;
     private String descricaoItemPedido;
-    
+
+    @ManyToOne
+    private Nota nota;
+
+    public Nota getNota() {
+        return nota;
+    }
+
+    public void setNota(Nota nota) {
+        this.nota = nota;
+    }
+
+    public Integer getSequenciaItemNota() {
+        return sequenciaItemNota;
+    }
+
+    public void setSequenciaItemNota(Integer sequenciaItemNota) {
+        this.sequenciaItemNota = sequenciaItemNota;
+    }
+
     public Integer getCodigo() {
         return codigo;
     }
@@ -149,7 +169,7 @@ public class Produto implements Serializable {
     public void setDescricaoItemPedido(String descricaoItemPedido) {
         this.descricaoItemPedido = descricaoItemPedido;
     }
-    
+
     public Long getId() {
         return id;
     }
